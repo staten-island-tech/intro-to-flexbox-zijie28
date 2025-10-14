@@ -114,3 +114,16 @@ html {
   }
   
 }
+
+.shopping {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 90vw;
+  column-gap: 1vh;
+  row-gap: 4vh;
+  padding-top: 1%;
+  margin-left: 4.5%;
+  margin-bottom: 3.5%;
+}
