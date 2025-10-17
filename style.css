@@ -84,6 +84,7 @@ html {
   background-color: rgb(107, 158, 158);
 }
 
+
 @media screen and (max-width: 800px) {
   .item {
     width: 100%;
@@ -114,16 +115,48 @@ html {
   }
   
 }
-
 .shopping {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: column;
   width: 90vw;
-  column-gap: 1vh;
-  row-gap: 4vh;
-  padding-top: 1%;
+  gap: 2vh;
   margin-left: 4.5%;
   margin-bottom: 3.5%;
+}
+
+.shopping-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgb(85, 126, 126);
+  width: 100%;
+  height: 10vh;
+  border-radius: 20px;
+  box-shadow: 5px 4px 4px;
+}
+.cart-description {
+  float: left;
+  text-align: left;
+  font-size: xx-large;
+  background-color: rgb(85, 126, 126);
+  border-radius: 10px;
+  margin: 1%;
+  width: 20%;
+}
+
+.cost {
+  width: 50%;
+  font-size: xx-large;
+  background-color: rgb(85, 126, 126);
+  margin: 1%;
+}
+
+.quanity-minus {
+  width: 10%;
+  height: 40%;
+}
+.quanity-plus {
+  width: 10%;
+  height: 40%;
 }

@@ -101,7 +101,7 @@ const list = [
     }
 ]
 
-
+total_shopping_cart = []
 
 
 
@@ -121,10 +121,15 @@ cards(list)
 document.querySelectorAll('.purchase').forEach(btn => {
     btn.addEventListener('click', function() {
         const btn_id = btn.getAttribute('id');
-        const shopping_cart = document.querySelector('.shopping')
+        const shopping_cart = document.querySelector('.shopping');
+        const filter_data = list.filter(item => item.name  === btn_id);
+        const price = filter_data[0]['price'];
+        console.log(filter_data);
         shopping_cart.insertAdjacentHTML("beforeend", `<div class="shopping-item">
-            <p class="item-description">${btn_id}</p>
-            <p class="price">$500</p>
+            <p class="cart-description">${btn_id}</p>
+            <p class="cost">${price}</p>
+            <button class="quanity-minus" id="${btn_id}"></button>
+            <button class="quanity-plus" id="${btn_id}"></button>
         </div>`);
         
 })
