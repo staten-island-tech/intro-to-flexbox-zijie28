@@ -5,7 +5,7 @@ const list = [
         "price": "$1000"
     },
     {
-        "name": "\"Mayodenoche\"",
+        "name": "Suspicious Mayodenoche",
         "image": "https://www.tasteofhome.com/wp-content/uploads/2024/12/Korean-Corn-Dogs_EXPS_TOHVP24_277260_MR_12_03_2.jpg",
         "price": "$500"
     },
@@ -47,7 +47,7 @@ const list = [
     {
         "name": "Meme NFT",
         "image": "https://i.imgflip.com/4/4t0m5.jpg",
-        "price": "$9999 or Free if you Ctrl + C"
+        "price": "$9999"
     },
     {
         "name": "Suspicious Soup",
@@ -101,7 +101,7 @@ const list = [
     }
 ]
 
-total_shopping_cart = []
+
 
 
 
@@ -117,20 +117,37 @@ function cards (l) {
     }
 }
 cards(list)
-
+let total_shopping_cart = []
 document.querySelectorAll('.purchase').forEach(btn => {
     btn.addEventListener('click', function() {
         const btn_id = btn.getAttribute('id');
         const shopping_cart = document.querySelector('.shopping');
         const filter_data = list.filter(item => item.name  === btn_id);
         const price = filter_data[0]['price'];
-        console.log(filter_data);
-        shopping_cart.insertAdjacentHTML("beforeend", `<div class="shopping-item">
-            <p class="cart-description">${btn_id}</p>
-            <p class="cost">${price}</p>
-            <button class="quanity-minus" id="${btn_id}"></button>
-            <button class="quanity-plus" id="${btn_id}"></button>
-        </div>`);
+        if(total_shopping_cart.some(s=> s.name === btn_id) !== true){
+            console.log(total_shopping_cart.includes(filter_data[0]['name']));
+            shopping_cart.insertAdjacentHTML("beforeend", `<div class="shopping-item" id="div-${btn_id}">
+                <p class="cart-description">${btn_id}</p>
+                <p class="cost">${price}</p>
+                <button class="quanity-minus" id="${btn_id}"><p class="add-text">-</p></button>
+                <p class="quanity" id="${btn_id}">1</p>
+                <button class="quanity-plus" id="${btn_id}"><p class="add-text">+</p></button>
+            </div>`);
+            total_shopping_cart.push({ 'name': btn_id, 'price': price, 'quanity': 1});
+            console.log(total_shopping_cart)
+        } else {
+            console.log("hi");
+            const shopping_filter = total_shopping_cart.filter(item => item.name  === btn_id);
+            const quant =shopping_filter[0]['quanity']++;
+            document.getElementById(`div-${btn_id}`).innerHTML =
+                `<p class="cart-description">${btn_id}</p>
+                <p class="cost">${price}</p>
+                <button class="quanity-minus" id="${btn_id}"><p class="add-text">-</p></button>
+                <p class="quanity" id="${btn_id}">${quant}</p>
+                <button class="quanity-plus" id="${btn_id}"><p class="add-text">+</p></button>`;
+
+        }
+
         
 })
 });

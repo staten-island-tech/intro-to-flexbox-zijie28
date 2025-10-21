@@ -159,4 +159,13 @@ html {
 .quanity-plus {
   width: 10%;
   height: 40%;
+
+}
+.add-text {
+  font-size: xx-large;
+}
+.quanity {
+  font-size: xx-large;
+  background-color: rgb(85, 126, 126);
+  padding: 5px;
 }
