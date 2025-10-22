@@ -126,6 +126,7 @@ document.querySelectorAll('.purchase').forEach(btn => {
         const price = filter_data[0]['price'];
         if(total_shopping_cart.some(s=> s.name === btn_id) !== true){
             console.log(total_shopping_cart.includes(filter_data[0]['name']));
+            total_shopping_cart.push({ 'name': btn_id, 'price': price, 'quanity': 1});
             shopping_cart.insertAdjacentHTML("beforeend", `<div class="shopping-item" id="div-${btn_id}">
                 <p class="cart-description">${btn_id}</p>
                 <p class="cost">${price}</p>
@@ -133,23 +134,50 @@ document.querySelectorAll('.purchase').forEach(btn => {
                 <p class="quanity" id="${btn_id}">1</p>
                 <button class="quanity-plus" id="${btn_id}"><p class="add-text">+</p></button>
             </div>`);
-            total_shopping_cart.push({ 'name': btn_id, 'price': price, 'quanity': 1});
+            const quant_minus = document.querySelector('.quanity-minus')
+            quant_minus.addEventListener('click', function(){
+            const quant_minus_filter = total_shopping_cart.filter(item => item.name === btn_id);
+            edit_quanity(btn_id, quant_minus_filter, 'hi')
             console.log(total_shopping_cart)
-        } else {
-            console.log("hi");
-            const shopping_filter = total_shopping_cart.filter(item => item.name  === btn_id);
-            const quant =shopping_filter[0]['quanity']++;
-            document.getElementById(`div-${btn_id}`).innerHTML =
-                `<p class="cart-description">${btn_id}</p>
-                <p class="cost">${price}</p>
-                <button class="quanity-minus" id="${btn_id}"><p class="add-text">-</p></button>
-                <p class="quanity" id="${btn_id}">${quant}</p>
-                <button class="quanity-plus" id="${btn_id}"><p class="add-text">+</p></button>`;
 
+});
+
+        } else {
+            const shopping_filter = total_shopping_cart.filter(item => item.name  === btn_id);
+            edit_quanity(btn_id, shopping_filter, '+')
         }
 
         
 })
 });
 
+function edit_quanity (id, filter, sign) {
+    const shopping_filter = total_shopping_cart.filter(item => item.name  === id);
+    if(sign === 'hi') {
+        --shopping_filter[0]['quanity'];
+    } else {
+        shopping_filter[0]['quanity']++;
+    }
 
+    document.getElementById(`div-${id}`).innerHTML =
+                `<p class="cart-description">${id}</p>
+                <p class="cost">${filter[0]['price']}</p>
+                <button class="quanity-minus" id="${id}"><p class="add-text">-</p></button>
+                <p class="quanity" id="${id}">${filter[0]['quanity']}</p>
+                <button class="quanity-plus" id="${id}"><p class="add-text">+</p></button>`;
+    
+}
+
+
+
+const quant_minus = document.querySelectorAll('.quanity-minus').forEach(btn => {
+    btn.addEventListener('click', function(){
+    const quant_minus_id = btn.getAttribute('id');
+    const quant_minus_filter = total_shopping_cart.filter(item => item.name === quant_minus_id);
+    edit_quanity(quant_minus_id, quant_minus_filter, 'hi')
+    console.log(total_shopping_cart)
+
+    })
+});
+
+document.addEventListener
