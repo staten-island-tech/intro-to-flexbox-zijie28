@@ -117,6 +117,8 @@ function cards (l) {
     }
 }
 cards(list)
+
+
 let total_shopping_cart = []
 document.querySelectorAll('.purchase').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -124,39 +126,89 @@ document.querySelectorAll('.purchase').forEach(btn => {
         const shopping_cart = document.querySelector('.shopping');
         const filter_data = list.filter(item => item.name  === btn_id);
         const price = filter_data[0]['price'];
-        if(total_shopping_cart.some(s=> s.name === btn_id) !== true){
-            console.log(total_shopping_cart.includes(filter_data[0]['name']));
-            total_shopping_cart.push({ 'name': btn_id, 'price': price, 'quanity': 1});
-            shopping_cart.insertAdjacentHTML("beforeend", `<div class="shopping-item" id="div-${btn_id}">
-                <p class="cart-description">${btn_id}</p>
-                <p class="cost">${price}</p>
-                <button class="quanity-minus" id="${btn_id}"><p class="add-text">-</p></button>
-                <p class="quanity" id="${btn_id}">1</p>
-                <button class="quanity-plus" id="${btn_id}"><p class="add-text">+</p></button>
-            </div>`);
-            const quant_minus = document.querySelector('.quanity-minus')
-            quant_minus.addEventListener('click', function(){
-            const quant_minus_filter = total_shopping_cart.filter(item => item.name === btn_id);
-            edit_quanity(btn_id, quant_minus_filter, 'hi')
-            console.log(total_shopping_cart)
 
+        if(total_shopping_cart.length === 0) {
+            if((total_shopping_cart.includes(filter_data[0]['name'])) === false){
+                
+                total_shopping_cart.push({ 'name': btn_id, 'price': price, 'quanity': 1});
+                shopping_cart.insertAdjacentHTML("beforeend", `<div class="shopping-item" id="div-${btn_id}">
+                    <p class="cart-description">${btn_id}</p>
+                    <p class="cost">${price}</p>
+                    <button class="quanity-minus" id="${btn_id}"><p class="add-text">-</p></button>
+                    <p class="quanity" id="${btn_id}">1</p>
+                    <button class="quanity-plus" id="${btn_id}"><p class="add-text">+</p></button>
+                </div>`);
+
+                document.querySelectorAll('.quanity-minus').forEach(btn => {
+                    btn.addEventListener('click', function(){
+                    const quant_minus_id = btn.getAttribute('id');
+                    const quant_minus_filter = total_shopping_cart.filter(item => item.name === quant_minus_id);
+                    edit_quanity(quant_minus_id, quant_minus_filter, 'hi');
+                    console.log(total_shopping_cart);})
+
+
+                document.querySelectorAll('.quanity-plus').forEach(btn => {
+                    btn.addEventListener('click', function(){
+                    const quant_plus_id = btn.getAttribute('id');
+                    const quant_plus_filter = total_shopping_cart.filter(item => item.name === quant_plus_id);
+                    edit_quanity(quant_plus_id, quant_plus_filter, '+');
+                    console.log(total_shopping_cart);})                
+
+    })
 });
-
         } else {
             const shopping_filter = total_shopping_cart.filter(item => item.name  === btn_id);
-            edit_quanity(btn_id, shopping_filter, '+')
+            console.log('hi')
+            edit_quanity(btn_id, shopping_filter, '+');
+        }
         }
 
+        total_shopping_cart.forEach(cart => {
+
+
+            if((cart.includes(filter_data[0]['name'])) === false){
+                
+                total_shopping_cart.push({ 'name': btn_id, 'price': price, 'quanity': 1});
+                shopping_cart.insertAdjacentHTML("beforeend", `<div class="shopping-item" id="div-${btn_id}">
+                    <p class="cart-description">${btn_id}</p>
+                    <p class="cost">${price}</p>
+                    <button class="quanity-minus" id="${btn_id}"><p class="add-text">-</p></button>
+                    <p class="quanity" id="${btn_id}">1</p>
+                    <button class="quanity-plus" id="${btn_id}"><p class="add-text">+</p></button>
+                </div>`);
+
+                document.querySelectorAll('.quanity-minus').forEach(btn => {
+                    btn.addEventListener('click', function(){
+                    const quant_minus_id = btn.getAttribute('id');
+                    const quant_minus_filter = total_shopping_cart.filter(item => item.name === quant_minus_id);
+                    edit_quanity(quant_minus_id, quant_minus_filter, 'hi');
+                    console.log(total_shopping_cart);})
+
+
+                document.querySelectorAll('.quanity-plus').forEach(btn => {
+                    btn.addEventListener('click', function(){
+                    const quant_plus_id = btn.getAttribute('id');
+                    const quant_plus_filter = total_shopping_cart.filter(item => item.name === quant_plus_id);
+                    edit_quanity(quant_plus_id, quant_plus_filter, '+');
+                    console.log(total_shopping_cart);})                
+
+    })
+});
+        } else {
+            const shopping_filter = total_shopping_cart.filter(item => item.name  === btn_id);
+            console.log('hi')
+            edit_quanity(btn_id, shopping_filter, '+');
+        }})
+
         
-})
+});
 });
 
 function edit_quanity (id, filter, sign) {
-    const shopping_filter = total_shopping_cart.filter(item => item.name  === id);
     if(sign === 'hi') {
-        --shopping_filter[0]['quanity'];
+        --filter[0]['quanity'];
     } else {
-        shopping_filter[0]['quanity']++;
+        ++filter[0]['quanity'];
     }
 
     document.getElementById(`div-${id}`).innerHTML =
@@ -170,14 +222,3 @@ function edit_quanity (id, filter, sign) {
 
 
 
-const quant_minus = document.querySelectorAll('.quanity-minus').forEach(btn => {
-    btn.addEventListener('click', function(){
-    const quant_minus_id = btn.getAttribute('id');
-    const quant_minus_filter = total_shopping_cart.filter(item => item.name === quant_minus_id);
-    edit_quanity(quant_minus_id, quant_minus_filter, 'hi')
-    console.log(total_shopping_cart)
-
-    })
-});
-
-document.addEventListener
